@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import * as bootstrap from 'bootstrap';
+import Logo from "./../../src/assets/images/white_logo.png"
 
 const Sidebar = ({ isOpen, toggle }) => {
   const location = useLocation();
@@ -35,17 +36,40 @@ useEffect(() => {
   return (
     <div className={`sidebar third-option text-white ${isOpen ? 'open' : 'collapsed'}`}>
       {/* Header with Logo */}
-      <div className="sidebar-header d-flex align-items-center p-3 border-bottom border-secondary">
+      <div className="sidebar-header d-flex align-items-center p-3 border-bottom">
         <div className="d-flex align-items-center">
-          <div className="logo-box bg-primary text-white fw-bold me-2 d-flex justify-content-center align-items-center">
-            GB
+           <button className="btn toggle-btn" onClick={toggle}>
+         <svg
+                id="Layer_1"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 137 106"
+              >
+                <title>hamburger</title>
+                <rect className="humbarg-icon-sorath" width="137" height="10.28" />
+                <rect
+                  className="humbarg-icon-sorath"
+                  y="43.86"
+                  width="117.99"
+                  height="10.28"
+                />
+                <rect
+                  className="humbarg-icon-sorath"
+                  y="87.72"
+                  width="91.47"
+                  height="10.28"
+                />
+              </svg>
+      </button>
+
+          <div className="logo-img">
+            <img src={Logo} alt="Cloud court" className='img-fluid'/>
           </div>
-          {isOpen && <h5 className="mb-0">Gibson</h5>}
+          {/* {isOpen && <h5 className="mb-0">Gibson</h5>} */}
         </div>
       </div>
 
       {/* Sidebar Links */}
-      <ul className="list-unstyled mt-4 sorath-header-li">
+      <ul className="list-unstyled mt-2 sorath-header-li">
          <li className={`btn-style2 px-3 ${location.pathname === '/dashboard1' ? 'active' : ''}`}>
           <Link
             className="text-decoration-none d-flex align-items-center"

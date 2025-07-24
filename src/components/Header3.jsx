@@ -1,4 +1,5 @@
 import { useMsal } from "@azure/msal-react";
+import Image from "https://i.pravatar.cc/150?img=4"
 
 const Header = ({ isOpen, toggle }) => {
   const { accounts } = useMsal();
@@ -27,11 +28,11 @@ function getInitials(name) {
   return (
     <nav className="navbar navbar-light bg-light shadow-sm px-3 d-flex justify-content-between align-items-center">
       {/* Left: Toggle Button */}
-      <button className="btn toggle-btn" onClick={toggle}>
+      {/* <button className="btn toggle-btn" onClick={toggle}>
         <i
           className={`bi ${isOpen ? "bi-chevron-left" : "bi-chevron-right"}`}
         ></i>
-      </button>
+      </button> */}
 
       {/* Right: Notification + Profile */}
       <div className="d-flex align-items-center gap-3">
@@ -46,14 +47,14 @@ function getInitials(name) {
         {/* Profile Dropdown (hover-enabled) */}
         <div className="dropdown dropdown-hover">
           <button
-            className="btn btn-style1 d-flex align-items-center dropdown-toggle"
+            className="btn dropdown-toggle"
             type="button"
             id="profileDropdown"
           >
             {/* <i className="bi bi-person-circle fs-5 me-1"></i> */}
             <div
               style={{
-                backgroundColor: "#007bff", // Bootstrap primary blue
+                backgroundImage: "#007bff", // Bootstrap primary blue
                 color: "white",
                 width: "40px",
                 height: "40px",

@@ -3,6 +3,7 @@
     --secondary-hp-color: #1171ef;
     --text-light-hp-color: #6c757d;
     --box-shadow-hp-4: 2px 2px 10px #80808026, -2px -2px 10px #80808017;
+    --white-hp-color: #ffffff;
 }
 
 body {
@@ -86,8 +87,8 @@ body {
 
 .toggle-btn {
     position: relative;
-    width: 32px;
-    height: 32px;
+    width: 24px;
+    height: 24px;
     padding: 0;
     font-size: 16px;
     border-radius: 6px;
@@ -95,7 +96,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(45deg, var(--secondary-hp-color), var(--primary-hp-color));
+    /* background: linear-gradient(45deg, var(--secondary-hp-color), var(--primary-hp-color)); */
     color: #fff;
 
 }
@@ -140,7 +141,12 @@ button#profileDropdown:hover {
 .bel-sorath span {
     background: #ffc800;
 }
-
+.logo-img{
+    width: 100%;
+}
+.sidebar.collapsed .logo-img {
+    display: none;
+}
 
 
 
@@ -216,7 +222,7 @@ thead.table-sorath-three th {
     background: var(--secondary-hp-color);
     padding: .5rem;
     font-weight: 500;
-    color: white;
+    color: var(--white-hp-color);
 }
 /* filter */
 button.filter-sorath-btn.btn.btn-outline-primary.btn-sm {
@@ -263,7 +269,7 @@ button.filter-sorath-btn.btn.btn-outline-primary.btn-sm {
     background: linear-gradient(45deg, var(--primary-hp-color), var(--secondary-hp-color));
     border-radius: 0 !IMPORTANT;
     padding: 14px !important;
-    color: white;
+    color: var(--white-hp-color);
     transition: 1s ease;
 }
 .sorath-table-header-filter:hover {
@@ -272,7 +278,7 @@ button.filter-sorath-btn.btn.btn-outline-primary.btn-sm {
 }
 .sorath-table-filter-box {
     border: 1px solid #80808038;
-    background: white;
+    background: var(--white-hp-color);
 }
 .sorath-table-boday-filter thead
  {
@@ -287,8 +293,8 @@ button.filter-sorath-btn.btn.btn-outline-primary.btn-sm {
     margin: 0;
 }
 button.filter-sorath-btn:hover svg, button.filter-sorath-btn:hover .text-hp-color {
-    stroke: white;
-    color: white;
+    stroke: var(--white-hp-color);
+    color: var(--white-hp-color);
 }
 .text-hp-color{
     color: var(--text-light-hp-color);
@@ -352,7 +358,7 @@ li.btn-style4.active a i {
     color: var(--secondary-hp-color);
 }
 .sidebar-4, div#layout-4 {
-    background: white;
+    background: var(--white-hp-color);
 }
 .sidebar-4 {
     background: transparent;
@@ -364,7 +370,7 @@ li.btn-style4.active a i {
 .search-bar.input-group {
     max-width: 420px;
     border: none;
-    background: white;
+    background: var(--white-hp-color);
     border-radius: 50px;
     box-shadow: var(--box-shadow-hp-4);
 }
@@ -378,7 +384,7 @@ li.btn-style4.active a i {
     border: none;
 }
 .icon-header {
-    background: white;
+    background: var(--white-hp-color);
     padding: 8px;
     height: 32px;
     width: 32px;
@@ -388,19 +394,19 @@ li.btn-style4.active a i {
     cursor: pointer;
 }
 .humbarg-icon-sorath{
- fill: var(--text-light-hp-color);
+ fill: var(--white-hp-color);
 }
 .sorath-card{
     box-shadow: var(--box-shadow-hp-4);
     border-radius: 10px;
-    background: white;
+    background: var(--white-hp-color);
 }
 .toggle-btn-sorath svg {
     width: 24px;
 }
 button.toggle-btn-sorath {
     background: transparent;
-    border: navajowhite;
+    border: navajovar(--white-hp-color);
     padding: 0
 }
 input.form-control::placeholder {
@@ -459,7 +465,7 @@ line {
 }
 .toper-name-sorath {
     font-size: 12px;
-    background: white;
+    background: var(--white-hp-color);
     box-shadow: var(--box-shadow-hp-4);
     border-radius: 5px;
     margin-top: -30px;
