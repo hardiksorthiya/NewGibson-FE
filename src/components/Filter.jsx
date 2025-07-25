@@ -10,7 +10,7 @@ const Filter = ({
   sendWitnessToParent,
   sendWitnessTypeToParent,
   totalCount,
-  fuzzyTranscripts
+  fuzzyTranscripts,
 }) => {
   const [transcript, setTranscript] = useState([]);
   const [witness, setWitness] = useState([]);
@@ -70,16 +70,12 @@ const Filter = ({
     }
   };
 
-
   useEffect(() => {
     fetchTranscripts();
     fetchWitness();
     fetchWitnessType();
     fetchWitnessAlignment();
   }, []);
-
-
-
 
   // Deduplicate by name
   const uniqueTranscripts = Array.from(
@@ -96,16 +92,15 @@ const Filter = ({
     }
   }, [selectedTranscripts]);
 
-  
-useEffect(() => {
-  setSelectedTranscripts(fuzzyTranscripts);
-}, [fuzzyTranscripts]);
+  useEffect(() => {
+    setSelectedTranscripts(fuzzyTranscripts);
+  }, [fuzzyTranscripts]);
 
-useEffect(() => {
-  if (typeof sendWitnessToParent === "function") {
-    sendWitnessToParent(selectedWitnesses); // ✅ Will run on every change
-  }
-}, [selectedWitnesses]);
+  useEffect(() => {
+    if (typeof sendWitnessToParent === "function") {
+      sendWitnessToParent(selectedWitnesses); // ✅ Will run on every change
+    }
+  }, [selectedWitnesses]);
 
   useEffect(() => {
     if (typeof sendWitnessTypeToParent === "function") {
@@ -122,16 +117,16 @@ useEffect(() => {
   };
 
   // Store only witness full names (string)
-const handleWitnessCheck = (option) => {
-  const fullName = option.fullname;
-  setSelectedWitnesses((prev) => {
-    const updated = prev.includes(fullName)
-      ? prev.filter((name) => name !== fullName)
-      : [...prev, fullName];
+  const handleWitnessCheck = (option) => {
+    const fullName = option.fullname;
+    setSelectedWitnesses((prev) => {
+      const updated = prev.includes(fullName)
+        ? prev.filter((name) => name !== fullName)
+        : [...prev, fullName];
 
-    return updated;
-  });
-};
+      return updated;
+    });
+  };
 
   const handleAlignmentChange = (alignment) => {
     setSelectedAlignments((prev) =>
@@ -157,42 +152,64 @@ const handleWitnessCheck = (option) => {
         </Offcanvas.Title>
       </Offcanvas.Header>
       <Offcanvas.Body className="bg-light">
-        <div className="bg-white p-3 rounded-3 shadow-sm">
+        <div className="filter-sorath-card">
           {/* Transcript Filter */}
           <Form.Group className="mb-3">
             <Form.Label className="fw-semibold">Transcript</Form.Label>
-<Dropdown className="w-100">
-  <Dropdown.Toggle
-    variant="light"
-    className="w-100 text-start border rounded-2"
-  >
-    {selectedTranscripts.length > 0 ? (
-      <div className="d-flex flex-wrap gap-1">
-        {selectedTranscripts.map((name, idx) => (
-          <span key={idx} className="badge bg-primary">
-            {name}
-          </span>
-        ))}
-      </div>
-    ) : (
-      "Select transcript(s)"
-    )}
-  </Dropdown.Toggle>
+            <Dropdown className="w-100">
+              <Dropdown.Toggle
+                variant="light"
+                className="w-100 text-start border rounded-2"
+              >
+                {selectedTranscripts.length > 0 ? (
+                  <div className="d-flex flex-wrap gap-1">
+                    {selectedTranscripts.map((name, idx) => (
+                      <span
+                        key={idx}
+                        className="badge bg-primary text-truncate"
+                        title={name}
+                        style={{
+                          maxWidth: "100%",
+                          overflow: "hidden",
+                          textOverflow: "ellipsis",
+                          whiteSpace: "nowrap",
+                        }}
+                      >
+                        {name}
+                      </span>
+                    ))}
+                  </div>
+                ) : (
+                  "Select transcript(s)"
+                )}
+              </Dropdown.Toggle>
 
-  <Dropdown.Menu style={{ maxHeight: "200px", overflowY: "auto" }}>
-    {uniqueTranscripts.map((option) => (
-      <Form.Check
-        key={option.id}
-        type="checkbox"
-        label={option.name}
-        className="px-3 py-1"
-        style={{ whiteSpace: "nowrap" }}
-        checked={selectedTranscripts.includes(option.name)}
-        onChange={() => handleTranscriptCheck(option)}
-      />
-    ))}
-  </Dropdown.Menu>
-</Dropdown>
+              <Dropdown.Menu style={{ maxHeight: "200px", overflowY: "auto" }}>
+                {uniqueTranscripts.map((option) => (
+                  <Form.Check
+                    key={option.id}
+                    type="checkbox"
+                    className="px-3 py-1"
+                    checked={selectedTranscripts.includes(option.name)}
+                    onChange={() => handleTranscriptCheck(option)}
+                    label={
+                      <span
+                        title={option.name}
+                        className="d-inline-block text-truncate"
+                        style={{
+                          maxWidth: "240px",
+                          whiteSpace: "nowrap",
+                          overflow: "hidden",
+                          textOverflow: "ellipsis",
+                        }}
+                      >
+                        {option.name}
+                      </span>
+                    }
+                  />
+                ))}
+              </Dropdown.Menu>
+            </Dropdown>
           </Form.Group>
 
           {/* Witness Filter */}
@@ -206,7 +223,17 @@ const handleWitnessCheck = (option) => {
                 {selectedWitnesses.length > 0 ? (
                   <div className="d-flex flex-wrap gap-1">
                     {selectedWitnesses.map((name, idx) => (
-                      <span key={idx} className="badge bg-success">
+                      <span
+                        key={idx}
+                        className="badge bg-success text-truncate"
+                        title={name}
+                        style={{
+                          maxWidth: "160px",
+                          overflow: "hidden",
+                          textOverflow: "ellipsis",
+                          whiteSpace: "nowrap",
+                        }}
+                      >
                         {name}
                       </span>
                     ))}
@@ -221,10 +248,23 @@ const handleWitnessCheck = (option) => {
                   <Form.Check
                     key={option.id}
                     type="checkbox"
-                    label={option.fullname}
                     className="px-3 py-1"
                     checked={selectedWitnesses.includes(option.fullname)}
                     onChange={() => handleWitnessCheck(option)}
+                    label={
+                      <span
+                        title={option.fullname}
+                        className="d-inline-block text-truncate"
+                        style={{
+                          maxWidth: "240px",
+                          whiteSpace: "nowrap",
+                          overflow: "hidden",
+                          textOverflow: "ellipsis",
+                        }}
+                      >
+                        {option.fullname}
+                      </span>
+                    }
                   />
                 ))}
               </Dropdown.Menu>
@@ -266,17 +306,17 @@ const handleWitnessCheck = (option) => {
           </Form.Group>
 
           {/* Testimony Count */}
-          <div className="bg-primary text-white text-center py-3 px-2 rounded-3">
+          {/* <div className="bg-primary text-white text-center py-3 px-2 rounded-3">
             <h5 className="mb-1 fw-bold">Testimony Count</h5>
             <h5 className=" mb-0">{totalCount}</h5>
-          </div>
+          </div> */}
 
           {/* Apply & Reset */}
           <div className="d-flex justify-content-between mt-4">
             <Button variant="secondary" onClick={handleClose}>
               Close
             </Button>
-            <Button variant="primary" onClick={handleClose}>
+            <Button className="btn-sorath-main" onClick={handleClose}>
               Apply Filters
             </Button>
           </div>

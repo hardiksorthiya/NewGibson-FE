@@ -256,33 +256,24 @@ const EnhancedTable = () => {
 
   return (
     <Container fluid className=" px-3">
-      <Card className="p-3 show-page-sorath">
+      <Card className="p-3 my-2 show-page-sorath">
         {/* Search & Filter */}
         {console.log("tscp[t", fuzzyTranscripts)}
         
         <Row className="mb-3">
-          <Col md={6}>
-            {/* <Form.Control
-              type="text"
-              placeholder="Search customer or phone..."
-              value={search}
-              onChange={(e) => {
-                setSearch(e.target.value);
-                setCurrentPage(1);
-              }}
-              className="show-page-sorath"
-            /> */}
+          {/* <Col md={6}>
+            
             <h2>Testimonies</h2>
             {selectedWitness}
-          </Col>
-          <Col md={6} className="d-flex justify-content-end">
+          </Col> */}
+          <Col md={6}>
+          <div className="left-side-search-filter-button d-flex">
             <Button
-              variant="outline-primary"
               size="sm"
               onClick={() => setShowSearchSection((prev) => !prev)}
               className="filter-sorath-btn"
-            >
-              <FiSearch className="filter-sorath" />
+            >Search
+              <FiSearch className="filter-sorath ms-2" />
             </Button>
 
             <Button
@@ -293,6 +284,15 @@ const EnhancedTable = () => {
             >
               <FiFilter className="filter-sorath" />
             </Button>
+          </div>{selectedWitness}
+          <div className="Filter-data-come"></div>
+            
+          </Col>
+
+          <Col md={6} className="text-end">
+            
+            <h5>Total Testimonies : <span className="alternate-highlight">{totalCount}</span></h5>
+            
           </Col>
         </Row>
 
@@ -308,7 +308,7 @@ const EnhancedTable = () => {
                   value={searchC}
                   onChange={(e) => setSearchC(e.target.value)}
                   placeholder="Search by Filename"
-                  className="show-page-sorath"
+                  className="form-sorath-input"
                 />
                 <div className="mt-2 d-flex gap-2">
                   {["fuzzy", "boolean", "exact"].map((opt) => (
@@ -331,7 +331,7 @@ const EnhancedTable = () => {
                   value={searchB}
                   onChange={(e) => setSearchB(e.target.value)}
                   placeholder="Search by Witness"
-                  className="show-page-sorath"
+                  className="form-sorath-input"
                 />
                 <div className="mt-2 d-flex gap-2">
                   {["fuzzy", "boolean", "exact"].map((opt) => (
@@ -354,7 +354,7 @@ const EnhancedTable = () => {
                   value={searchA}
                   onChange={(e) => setSearchA(e.target.value)}
                   placeholder="Search by test"
-                  className="show-page-sorath"
+                  className="form-sorath-input"
                 />
                 <div className="mt-2 d-flex gap-2">
                   {["fuzzy", "boolean", "exact"].map((opt) => (
@@ -381,9 +381,9 @@ const EnhancedTable = () => {
                 Reset
               </Button>
               <Button
-                variant="primary"
                 size="sm"
                 onClick={() => handleSearchSubmit(currentPage, rowsPerPage)}
+                className="btn-sorath-main"
               >
                 Apply Search
               </Button>
@@ -416,6 +416,12 @@ const EnhancedTable = () => {
                     textOverflow: "ellipsis",
                   }}
                 >
+                  <div className="comment-icon-sorath">
+                    <svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 61.05 57.58">
+                  <title>comment</title>
+                  <path d="M443.76,490.72V479.29c-8.71-1.55-10.18-8-9.76-15.94.31-6-.05-12,.1-18,.17-7.08,4.24-11.17,11.26-11.23q19.22-.15,38.43,0c7,.06,11,4.16,11.12,11.28.09,7.48.1,15,0,22.46-.11,7.06-4.11,11-11.29,11.1-6.32.11-12.67-.26-19,.16a16.64,16.64,0,0,0-7.95,2.91c-4.12,2.86-7.8,6.35-11.66,9.57Zm2.94-4a86.26,86.26,0,0,0,7-5.93c3.43-3.67,7.38-5.06,12.44-4.68,5.79.42,11.64.16,17.46.07,5.54-.09,8.55-2.76,8.68-8.11q.28-11.49,0-23c-.14-5.4-3.09-8.15-8.61-8.19q-19.22-.13-38.44,0c-5.22,0-8.21,2.85-8.34,7.94-.19,7.81-.11,15.64,0,23.46,0,3.72,1.93,7,5.49,7.37,5.1.46,5,3.17,4.41,6.76A35.67,35.67,0,0,0,446.7,486.76Z" transform="translate(-433.93 -434.09)"/><circle cx="14.52" cy="20.91" r="3"/><circle cx="30.52" cy="20.91" r="3"/><circle cx="46.52" cy="20.91" r="3"/></svg>
+                  </div>
+                  
                   {/* You can put something like an icon or tooltip here later */}
                 </td>
                 <td style={{ width: "100px" }}>

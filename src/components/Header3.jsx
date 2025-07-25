@@ -1,12 +1,15 @@
 import { useMsal } from "@azure/msal-react";
-import Image from "https://i.pravatar.cc/150?img=4"
+import React, { useState, useRef, useEffect } from "react";
+// Removed invalid import for Image
 
 const Header = ({ isOpen, toggle }) => {
   const { accounts } = useMsal();
-
   const name = accounts[0]?.idTokenClaims?.name; // Display Name
   const upn = accounts[0]?.idTokenClaims?.preferred_username;
   const initials = getInitials(name);
+  const [isNotifOpen, setIsNotifOpen] = useState(false);
+  const notifRef = useRef();
+    const toggleNotif = () => setIsNotifOpen(!isNotifOpen);
 
   const { instance } = useMsal();
   const handleLogout = () => {
@@ -15,55 +18,83 @@ const Header = ({ isOpen, toggle }) => {
     });
   };
 
-function getInitials(name) {
-  if (!name) return "";
+  function getInitials(name) {
+    if (!name) return "";
+    const words = name.trim().split(/\s+/); // Split by any amount of whitespace
+    const firstInitial = words[0]?.[0] || "";
+    const secondInitial = words[1]?.[0] || "";
+    return (firstInitial + secondInitial).toUpperCase();
+  }
+
+
+// Close notification when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (notifRef.current && !notifRef.current.contains(e.target)) {
+        setIsNotifOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
   
-  const words = name.trim().split(/\s+/); // Split by any amount of whitespace
-
-  const firstInitial = words[0]?.[0] || "";
-  const secondInitial = words[1]?.[0] || "";
-
-  return (firstInitial + secondInitial).toUpperCase();
-}
   return (
     <nav className="navbar navbar-light bg-light shadow-sm px-3 d-flex justify-content-between align-items-center">
       {/* Left: Toggle Button */}
-      {/* <button className="btn toggle-btn" onClick={toggle}>
-        <i
-          className={`bi ${isOpen ? "bi-chevron-left" : "bi-chevron-right"}`}
-        ></i>
-      </button> */}
+      <div>
+        <h2>Testimonies</h2>
+      </div>
 
       {/* Right: Notification + Profile */}
       <div className="d-flex align-items-center gap-3">
         {/* Notification Icon */}
-        <button className="bel-sorath btn position-relative">
-          <i className="bi bi-bell fs-5"></i>
-          <span className="position-absolute translate-middle p-1 rounded-circle">
-            <span className="visually-hidden">New alerts</span>
-          </span>
-        </button>
+        <div className="position-relative" ref={notifRef}>
+          <button
+            className="bel-sorath btn position-relative"
+            onClick={toggleNotif}
+          >
+            <i className="bi bi-bell fs-5"></i>
+            <span className="position-absolute top-0 start-100 translate-middle p-1 bg-danger border border-light rounded-circle">
+              <span className="visually-hidden">New alerts</span>
+            </span>
+          </button>
+
+          {isNotifOpen && (
+            <div className="notification-dropdown shadow-sm rounded-3">
+              <div className="notfication-heading-dropdown border-bottom p-3">
+                <h4 className="mb-0">Notifications</h4>
+                <a href="#">Sell all</a>
+              </div>
+              
+              <ul className="list-unstyled mb-0">
+                <li className="px-3 py-2 border-bottom">
+                  You approved a login.
+                  <small className="text-muted d-block">5m ago</small>
+                </li>
+                <li className="px-3 py-2 border-bottom">
+                  Friend suggestion: <strong>Kaju Bhadani</strong>
+                  <small className="text-muted d-block">1h ago</small>
+                </li>
+                <li className="px-3 py-2 border-bottom">
+                  Tony marked himself safe.
+                  <small className="text-muted d-block">2d ago</small>
+                </li>
+              </ul>
+            </div>
+          )}
+        </div>
 
         {/* Profile Dropdown (hover-enabled) */}
         <div className="dropdown dropdown-hover">
           <button
-            className="btn dropdown-toggle"
+            className="btn dropdown-toggle p-0"
             type="button"
             id="profileDropdown"
           >
             {/* <i className="bi bi-person-circle fs-5 me-1"></i> */}
             <div
               style={{
-                backgroundImage: "#007bff", // Bootstrap primary blue
-                color: "white",
-                width: "40px",
-                height: "40px",
-                borderRadius: "50%",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                fontWeight: "bold",
-                fontSize: "16px",
+                backgroundImage: 'url("https://i.pravatar.cc/150?img=4")',
               }}
               title={name}
             >
