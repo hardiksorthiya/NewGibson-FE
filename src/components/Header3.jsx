@@ -1,6 +1,6 @@
 import { useMsal } from "@azure/msal-react";
 import React, { useState, useRef, useEffect } from "react";
-// Removed invalid import for Image
+import "../assets/css/comment.css"
 
 const Header = ({ isOpen, toggle }) => {
   const { accounts } = useMsal();
@@ -39,11 +39,11 @@ const Header = ({ isOpen, toggle }) => {
   }, []);
   
   return (
-    <nav className="navbar navbar-light bg-light shadow-sm px-3 d-flex justify-content-between align-items-center">
+    <nav className="navbar navbar-light bg-light shadow-sm px-3 d-flex justify-content-end">
       {/* Left: Toggle Button */}
-      <div>
+      {/* <div>
         <h2>Testimonies</h2>
-      </div>
+      </div> */}
 
       {/* Right: Notification + Profile */}
       <div className="d-flex align-items-center gap-3">

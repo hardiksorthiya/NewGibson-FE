@@ -37,7 +37,7 @@ useEffect(() => {
     <div className={`sidebar third-option text-white ${isOpen ? 'open' : 'collapsed'}`}>
       {/* Header with Logo */}
       <div className="sidebar-header d-flex align-items-center p-3 border-bottom">
-        <div className="d-flex align-items-center">
+        <div className="d-flex align-items-center justify-content-between">
            <button className="btn toggle-btn" onClick={toggle}>
          <svg
                 id="Layer_1"

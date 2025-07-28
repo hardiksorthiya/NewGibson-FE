@@ -66,11 +66,12 @@ body {
 .sidebar .menu-text {
     transition: opacity 0.3s ease;
     opacity: 1;
+        white-space: nowrap;
 }
 
 .sorath-header-li a {
     color: #a1a1a1;
-    padding: 10px;
+        padding: 10px 0;
 }
 
 .sidebar.collapsed .menu-text {
@@ -87,8 +88,8 @@ body {
 
 .toggle-btn {
     position: relative;
-    width: 24px;
-    height: 24px;
+    width: 30px;
+    height: 30px;
     padding: 0;
     font-size: 16px;
     border-radius: 6px;
@@ -139,7 +140,7 @@ body {
     background: #ffc800;
 }
 .logo-img{
-    width: 100%;
+    width: 80%;
 }
 .sidebar.collapsed .logo-img {
     display: none;
@@ -299,6 +300,15 @@ button.filter-sorath-btn:hover svg, button.filter-sorath-btn:hover .text-hp-colo
 }
 .filter-sorath-btn:hover{
     background: linear-gradient(45deg, var(--secondary-hp-color), var(--primary-hp-color));
+}
+.filter-sorath-btn-color{
+    background: linear-gradient(45deg, var(--secondary-hp-color), var(--primary-hp-color));
+    border: none;
+    color: var(--white-hp-color);
+}
+.filter-sorath-btn-color:hover{
+    background: linear-gradient(45deg, var(--primary-hp-color), var(--secondary-hp-color));
+    border: none;
 }
 span.alternate-highlight {
     animation: colorchange 2s infinite alternate;
