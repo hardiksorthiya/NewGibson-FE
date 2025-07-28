@@ -71,7 +71,7 @@ const CommentSidebar = ({ show, handleClose }) => {
             prev.map(c => (c.id === id ? { ...c, text: newText } : c))
         );
     };
-
+  
     const initials = getInitials(name);
 
     function getInitials(name) {
