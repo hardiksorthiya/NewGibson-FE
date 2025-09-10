@@ -88,6 +88,7 @@ sorath {
     background-color: var(--sorath-primary-color);
     color: var(--sorath-white-color);
     font-weight: 500;
+    font-size: small;
 
 }
 

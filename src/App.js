@@ -2,17 +2,9 @@ import React, {useState, useEffect} from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { useIsAuthenticated } from "@azure/msal-react";
 
-import Dashboard from './Pages/Dashboard/index';
-import Dashboard1 from './Pages/Dashboard/Dashboard';
-import Dashboard2 from './Pages/Dashboard/Dashboard2';
 
-// import Dashboard2 from './Pages/Dashboard/index2';
 import Dashboard3 from './Pages/Dashboard/index3';
 
-import Layout from './components/Layout';
-import Layout2 from './components/Layout2';
-import Layout3 from './components/Layout3';
-import Layout4 from "./components/Layout4";
 import Layout5 from "./components/Layout5";
 
 import Login from './Pages/Auth/Login';
@@ -46,11 +38,6 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        {/* <Route path="/dashboard" element={<Layout><Dashboard /></Layout>} />
-        <Route path="/dashboard2" element={<Layout2><Dashboard2 /></Layout2>} /> */}
-        <Route path="/dashboard" element={<Layout5><Dashboard1 /></Layout5>} />
-        <Route path="/dashboard2" element={<Layout5><Dashboard2 /></Layout5>} />
-        <Route path="/transcripts" element={<Layout3><TranscriptsByWitness /></Layout3>} />
 
         <Route path="/login" element={<Login />} />
         <Route

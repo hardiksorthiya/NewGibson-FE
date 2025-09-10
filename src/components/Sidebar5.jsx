@@ -33,7 +33,7 @@ const Sidebar = ({ isOpen }) => {
                 title={item.label}
               >
                 <i className={`bi ${item.icon}`}></i>
-                {isOpen && <span className="ms-3">{item.label}</span>}
+                {isOpen && <span className="ms-2">{item.label}</span>}
               </Link>
             </li>
           ))}

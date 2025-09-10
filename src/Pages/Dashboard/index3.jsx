@@ -59,7 +59,13 @@ const TestimonySearchPage = () => {
   const handleShow = () => setShow(true);
 
   const [testimonyId, setTestimonyId] = useState();
-  const databases = ["DocsSHBLaguenesse", "DocsSHBPMProctor", "DocsSHBPMCummings", "DocsSHBPMRuckdeschel", "DocsSHBPMProchaska"]
+  const databases = [
+    "DocsSHBLaguenesse",
+    "DocsSHBPMProctor",
+    "DocsSHBPMCummings",
+    "DocsSHBPMRuckdeschel",
+    "DocsSHBPMProchaska",
+  ];
   // const [selectedTranscripts, setSelectedTranscripts] = useState([]);
   // const [fuzzyTranscripts, setFuzzyTranscripts] = useState([]);
   // const [fuzzyWitnesses, setFuzzyWitnesses] = useState([]);
@@ -81,9 +87,9 @@ const TestimonySearchPage = () => {
     setSelectedWitness(data);
   };
 
-  const handleDbChange = (data)=> {
-    setSelectedDatabases(data)
-  }
+  const handleDbChange = (data) => {
+    setSelectedDatabases(data);
+  };
 
   const handleDownloadExcel = async () => {
     try {
@@ -623,73 +629,71 @@ const TestimonySearchPage = () => {
       </Modal>
       <Card className="p-3 show-page-sorath">
         {/* Search & Filter */}
-      <Row>
-        <Col md={6}>
-        </Col>
-<Col md={6}>
-  <Form.Group className="mb-3">
-    <Form.Label className="fw-semibold">Database</Form.Label>
-    <Dropdown className="w-100">
-      <Dropdown.Toggle
-        variant="light"
-        className="w-100 text-start border rounded-2"
-      >
-        {selectedDatabases.length > 0 ? (
-          <div className="d-flex flex-wrap gap-1">
-            {selectedDatabases.map((db, idx) => (
-              <span key={idx} className="badge bg-primary">
-                {db.name}
-              </span>
-            ))}
-          </div>
-        ) : (
-          "Select Database(s)"
-        )}
-      </Dropdown.Toggle>
+        <Row className="align-items-center">
+          <Col md={6}>
+            <Form.Group className="mb-3">
+              <Form.Label className="fw-semibold">Database</Form.Label>
+              <Dropdown className="w-100">
+                <Dropdown.Toggle
+                  variant="light"
+                  className="w-100 text-start border rounded-2"
+                >
+                  {selectedDatabases.length > 0 ? (
+                    <div className="d-flex flex-wrap gap-1">
+                      {selectedDatabases.map((db, idx) => (
+                        <span key={idx} className="badge bg-primary">
+                          {db.name}
+                        </span>
+                      ))}
+                    </div>
+                  ) : (
+                    "Select Database(s)"
+                  )}
+                </Dropdown.Toggle>
 
-      <Dropdown.Menu style={{ maxHeight: "200px", overflowY: "auto" }}>
-        {databases.map((option) => (
-          <Form.Check
-            key={option.id}
-            type="checkbox"
-            label={option}
-            className="px-3 py-1"
-            style={{ whiteSpace: "nowrap" }}
-            checked={selectedDatabases.some((db) => db.id === option.id)}
-            onChange={() => handleDbChange(option)}
-            onClick={(e) => e.stopPropagation()} // 🔒 Prevent dropdown from closing
-          />
-        ))}
-      </Dropdown.Menu>
-    </Dropdown>
-  </Form.Group>
-</Col>
-      </Row>
-        <Row className="mb-3">
-          <Col md={4}>
+                <Dropdown.Menu
+                  style={{ maxHeight: "200px", overflowY: "auto" }}
+                >
+                  {databases.map((option) => (
+                    <Form.Check
+                      key={option.id}
+                      type="checkbox"
+                      label={option}
+                      className="px-3 py-1"
+                      style={{ whiteSpace: "nowrap" }}
+                      checked={selectedDatabases.some(
+                        (db) => db.id === option.id
+                      )}
+                      onChange={() => handleDbChange(option)}
+                      onClick={(e) => e.stopPropagation()} // 🔒 Prevent dropdown from closing
+                    />
+                  ))}
+                </Dropdown.Menu>
+              </Dropdown>
+            </Form.Group>
           </Col>
+          <Col md={6}>
+            <div className="d-flex justify-content-end align-items-center">
+              <Button
+                variant="outline-primary"
+                size="sm"
+                onClick={() => setShowSearchSection((prev) => !prev)}
+                className="filter-sorath-btn"
+              >
+                <FiSearch className="filter-sorath" />
+              </Button>
 
-          <Col md={6} className="d-flex justify-content-end">
-            <Button
-              variant="outline-primary"
-              size="sm"
-              onClick={() => setShowSearchSection((prev) => !prev)}
-              className="filter-sorath-btn"
-            >
-              <FiSearch className="filter-sorath" />
-            </Button>
-
-            <Button
-              variant="outline-primary"
-              size="sm"
-              onClick={handleShowFilters}
-              className="filter-sorath-btn ms-3"
-            >
-              <FiFilter className="filter-sorath" />
-            </Button>
+              <Button
+                variant="outline-primary"
+                size="sm"
+                onClick={handleShowFilters}
+                className="filter-sorath-btn ms-3"
+              >
+                <FiFilter className="filter-sorath" />
+              </Button>
+            </div>
           </Col>
         </Row>
-
         {/* Conditional Search Section */}
 
         <Collapse in={showSearchSection}>
@@ -698,15 +702,34 @@ const TestimonySearchPage = () => {
               {/* Search C */}
               <Col md={4}>
                 <Form.Label>Search by Filename</Form.Label>
-                <Form.Control
-                  value={searchC}
-                  onChange={(e) => {
-                    fetchData();
-                    setSearchC(e.target.value);
-                  }}
-                  placeholder="Search by Filename"
-                  className="show-page-sorath"
-                />
+                <div className="d-flex align-items-center gap-3">
+                  <Form.Control
+                    value={searchC}
+                    onChange={(e) => {
+                      fetchData();
+                      setSearchC(e.target.value);
+                    }}
+                    placeholder="Search by Filename"
+                    className="show-page-sorath"
+                  />
+                  <div
+                    className=""
+                    style={{
+                      width: "65px",
+                      height: "40px",
+                      border: "2px solid #11b3ef",
+                      borderRadius: "10px",
+                      boxShadow: "4px 4px 10px grey", // blue shadow
+                      display: "flex", // 🔹 Flexbox to center content
+                      justifyContent: "center", // 🔹 Center horizontally
+                      alignItems: "center", // 🔹 Center vertically
+                      fontWeight: "bold", // Optional: makes number more prominent
+                    }}
+                  >
+                    {filenameCnt}
+                  </div>
+                </div>
+
                 <div className="mt-2 d-flex gap-2">
                   {["fuzzy", "boolean", "exact"].map((opt) => (
                     <Form.Check
@@ -728,34 +751,37 @@ const TestimonySearchPage = () => {
                     className="bi bi-question-circle-fill"
                   ></i>{" "}
                 </div>
-                <div
-                  className="mt-3"
-                  style={{
-                    width: "65px",
-                    height: "40px",
-                    border: "2px solid #11b3ef",
-                    borderRadius: "10px",
-                    boxShadow: "4px 4px 10px grey", // blue shadow
-                    display: "flex", // 🔹 Flexbox to center content
-                    justifyContent: "center", // 🔹 Center horizontally
-                    alignItems: "center", // 🔹 Center vertically
-                    fontWeight: "bold", // Optional: makes number more prominent
-                  }}
-                >
-                  {filenameCnt}
-                </div>
               </Col>
               {/* Search B */}
               <Col md={4}>
                 <Form.Label>Search by Witness</Form.Label>
-                <Form.Control
-                  value={searchB}
-                  onChange={(e) => {
-                    setSearchB(e.target.value);
-                  }}
-                  placeholder="Search by Witness"
-                  className="show-page-sorath"
-                />
+                <div className="d-flex align-items-center gap-3">
+                  <Form.Control
+                    value={searchB}
+                    onChange={(e) => {
+                      setSearchB(e.target.value);
+                    }}
+                    placeholder="Search by Witness"
+                    className="show-page-sorath"
+                  />
+                  <div
+                    className=""
+                    style={{
+                      width: "65px",
+                      height: "40px",
+                      border: "2px solid #11b3ef",
+                      borderRadius: "10px",
+                      boxShadow: "4px 4px 10px grey", // blue shadow
+                      display: "flex", // 🔹 Flexbox to center content
+                      justifyContent: "center", // 🔹 Center horizontally
+                      alignItems: "center", // 🔹 Center vertically
+                      fontWeight: "bold", // Optional: makes number more prominent
+                    }}
+                  >
+                    {witnessNameCnt}
+                  </div>
+                </div>
+
                 <div className="mt-2 d-flex gap-2">
                   {["fuzzy", "boolean", "exact"].map((opt) => (
                     <Form.Check
@@ -778,35 +804,40 @@ const TestimonySearchPage = () => {
                     className="bi bi-question-circle-fill"
                   ></i>{" "}
                 </div>
-                <div
-                  className="mt-3"
-                  style={{
-                    width: "65px",
-                    height: "40px",
-                    border: "2px solid #11b3ef",
-                    borderRadius: "10px",
-                    boxShadow: "4px 4px 10px grey", // blue shadow
-                    display: "flex", // 🔹 Flexbox to center content
-                    justifyContent: "center", // 🔹 Center horizontally
-                    alignItems: "center", // 🔹 Center vertically
-                    fontWeight: "bold", // Optional: makes number more prominent
-                  }}
-                >
-                  {witnessNameCnt}
-                </div>
               </Col>
               {/* Search A */}
               <Col md={4}>
                 <Form.Label>Search All Testimony</Form.Label>
-                <Form.Control
-                  value={searchA}
-                  onChange={(e) => {
-                    fetchData();
-                    setSearchA(e.target.value);
-                  }}
-                  placeholder="Search by test"
-                  className="show-page-sorath"
-                />
+                <div className="d-flex align-items-center gap-3">
+                  <Form.Control
+                    value={searchA}
+                    onChange={(e) => {
+                      fetchData();
+                      setSearchA(e.target.value);
+                    }}
+                    placeholder="Search by test"
+                    className="show-page-sorath"
+                  />
+
+                  <div
+                    className=""
+                    style={{
+                      width: "65px",
+                      height: "40px",
+                      border: "2px solid #11b3ef",
+                      borderRadius: "10px",
+                      boxShadow: "4px 4px 10px grey", // blue shadow
+                      display: "flex", // 🔹 Flexbox to center content
+                      justifyContent: "center", // 🔹 Center horizontally
+                      alignItems: "center", // 🔹 Center vertically
+                      fontWeight: "bold", // Optional: makes number more prominent
+                    }}
+                  >
+                    {showInitialTestimonyCnt
+                      ? initialTestimonyCnt
+                      : testimonyCnt}
+                  </div>
+                </div>
 
                 <div className="mt-2 d-flex gap-2">
                   {["fuzzy", "boolean", "exact"].map((opt) => (
@@ -829,28 +860,9 @@ const TestimonySearchPage = () => {
                     className="bi bi-question-circle-fill"
                   ></i>{" "}
                 </div>
-                <Row>
-                  <Col>
-                    <div
-                      className="mt-3"
-                      style={{
-                        width: "65px",
-                        height: "40px",
-                        border: "2px solid #11b3ef",
-                        borderRadius: "10px",
-                        boxShadow: "4px 4px 10px grey", // blue shadow
-                        display: "flex", // 🔹 Flexbox to center content
-                        justifyContent: "center", // 🔹 Center horizontally
-                        alignItems: "center", // 🔹 Center vertically
-                        fontWeight: "bold", // Optional: makes number more prominent
-                      }}
-                    >
-                      {showInitialTestimonyCnt
-                        ? initialTestimonyCnt
-                        : testimonyCnt}
-                    </div>
-                  </Col>
-                  <Col>
+              </Col>
+
+              <Col md={1}>
                     <div className="mt-3 d-flex justify-content-end gap-2">
                       <Button
                         variant="secondary"
@@ -870,15 +882,14 @@ const TestimonySearchPage = () => {
                       </Button> */}
                     </div>
                   </Col>
-                </Row>
-              </Col>
             </Row>
           </div>
         </Collapse>
 
         {/* Table */}
 
-        <div class="container"
+        <div
+          class="container"
           style={{ height: "600px", overflowY: "auto" }}
           // ref={scrollContainerRef}
           // onScroll={handleScroll}
@@ -900,7 +911,7 @@ const TestimonySearchPage = () => {
               </div>
             </div>
           ) : (
-           <Table
+            <Table
               responsive
               bordered
               className="align-middle rounded-3 qa-table"
