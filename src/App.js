@@ -38,9 +38,19 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
+<<<<<<< HEAD
+=======
+        {/* <Route path="/dashboard" element={<Layout><Dashboard /></Layout>} />
+        <Route path="/dashboard2" element={<Layout2><Dashboard2 /></Layout2>} /> */}
+        <Route path="/dashboard1" element={<Layout4><Dashboard1 /></Layout4>} />
+        <Route path="/dashboard2" element={<Layout5><Dashboard2 /></Layout5>} />
+        <Route path="/testimony" element={<Layout3>
+                <Dashboard3 />
+              </Layout3>} />
+>>>>>>> fb12ab84a2972781f4ce021f7aaf36c437c35998
 
         <Route path="/login" element={<Login />} />
-        <Route
+        {/* <Route
           path="/testimony"
           element={
             // <PrivateRoute>
@@ -49,9 +59,14 @@ function App() {
               </Layout5>
             //  </PrivateRoute>
           }
+<<<<<<< HEAD
         />
         
         <Route path="*" element={<Navigate to="/testimony" replace />} />
+=======
+        /> */}
+        <Route path="*" element={<Navigate to="/dashboard" replace />} />
+>>>>>>> fb12ab84a2972781f4ce021f7aaf36c437c35998
       </Routes>
     </BrowserRouter>
   );

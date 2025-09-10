@@ -6,12 +6,20 @@ import { useSearchContext } from "../contexts/SearchContext";
 const Filter = ({
   show,
   handleClose,
+<<<<<<< HEAD
 
   // testimonyCnt,
   // fuzzyTranscripts,
   // fuzzyWitnesses,
   // sendSearchCToParent,
   // sendSearchBToParent,
+=======
+  sendTranscriptToParent,
+  sendWitnessToParent,
+  sendWitnessTypeToParent,
+  totalCount,
+  fuzzyTranscripts,
+>>>>>>> fb12ab84a2972781f4ce021f7aaf36c437c35998
 }) => {
   const {
     searchA,
@@ -46,6 +54,45 @@ const Filter = ({
     setSelectedTranscripts([]);
   };
 
+<<<<<<< HEAD
+=======
+  const fetchWitness = async () => {
+    try {
+      const res = await fetch(
+        `${process.env.REACT_APP_PROD_API_URL}/api/witness/`
+      );
+      const data = await res.json();
+      setWitness(data.witnesses);
+    } catch (err) {
+      console.error(err.message);
+    }
+  };
+
+  const fetchWitnessType = async () => {
+    try {
+      const res = await fetch(
+        `${process.env.REACT_APP_PROD_API_URL}/api/witness-type/`
+      );
+      const data = await res.json();
+      setWitnessType(data.witnesses);
+    } catch (err) {
+      console.error(err.message);
+    }
+  };
+
+  const fetchWitnessAlignment = async () => {
+    try {
+      const res = await fetch(
+        `${process.env.REACT_APP_PROD_API_URL}/api/witness-alignment/`
+      );
+      const data = await res.json();
+      setWitnessAlighment(data.witnesses);
+    } catch (err) {
+      console.error(err.message);
+    }
+  };
+
+>>>>>>> fb12ab84a2972781f4ce021f7aaf36c437c35998
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -76,6 +123,10 @@ const Filter = ({
     fetchData();
   }, []);
 
+<<<<<<< HEAD
+=======
+  // Deduplicate by name
+>>>>>>> fb12ab84a2972781f4ce021f7aaf36c437c35998
   const uniqueTranscripts = Array.from(
     new Map(transcript.map((item) => [item.name, item])).values()
   );
@@ -83,6 +134,7 @@ const Filter = ({
     new Map(witness.map((item) => [item.fullname, item])).values()
   );
 
+<<<<<<< HEAD
   // useEffect(() => {
   //   if (didMountTranscript.current) {
   //     sendTranscriptToParent?.(selectedTranscripts);
@@ -90,6 +142,24 @@ const Filter = ({
   //     didMountTranscript.current = true;
   //   }
   // }, [selectedTranscripts]);
+=======
+  // Send to parent on change
+  useEffect(() => {
+    if (typeof sendTranscriptToParent === "function") {
+      sendTranscriptToParent(selectedTranscripts);
+    }
+  }, [selectedTranscripts]);
+
+  useEffect(() => {
+    setSelectedTranscripts(fuzzyTranscripts);
+  }, [fuzzyTranscripts]);
+
+  useEffect(() => {
+    if (typeof sendWitnessToParent === "function") {
+      sendWitnessToParent(selectedWitnesses); // ✅ Will run on every change
+    }
+  }, [selectedWitnesses]);
+>>>>>>> fb12ab84a2972781f4ce021f7aaf36c437c35998
 
   useEffect(() => {
     setSelectedTranscripts(fuzzyTranscripts);
@@ -132,6 +202,7 @@ const Filter = ({
     // sendSearchCToParent("");
   };
 
+<<<<<<< HEAD
   const handleWitnessCheck = (option) => {
     const fullName = option.fullname;
     setSelectedWitness((prev) =>
@@ -140,6 +211,18 @@ const Filter = ({
         : [...prev, fullName]
     );
     // sendSearchBToParent("");
+=======
+  // Store only witness full names (string)
+  const handleWitnessCheck = (option) => {
+    const fullName = option.fullname;
+    setSelectedWitnesses((prev) => {
+      const updated = prev.includes(fullName)
+        ? prev.filter((name) => name !== fullName)
+        : [...prev, fullName];
+
+      return updated;
+    });
+>>>>>>> fb12ab84a2972781f4ce021f7aaf36c437c35998
   };
 
   const handleAlignmentChange = (alignment) => {
@@ -166,7 +249,7 @@ const Filter = ({
         </Offcanvas.Title>
       </Offcanvas.Header>
       <Offcanvas.Body className="bg-light">
-        <div className="bg-white p-3 rounded-3 shadow-sm">
+        <div className="filter-sorath-card">
           {/* Transcript Filter */}
           <Form.Group className="mb-3">
             <Form.Label className="fw-semibold">Transcript</Form.Label>
@@ -178,7 +261,21 @@ const Filter = ({
                 {selectedTranscripts.length > 0 ? (
                   <div className="d-flex flex-wrap gap-1">
                     {selectedTranscripts.map((name, idx) => (
+<<<<<<< HEAD
                       <span key={idx} className="badge bg-primary">
+=======
+                      <span
+                        key={idx}
+                        className="badge bg-primary text-truncate"
+                        title={name}
+                        style={{
+                          maxWidth: "100%",
+                          overflow: "hidden",
+                          textOverflow: "ellipsis",
+                          whiteSpace: "nowrap",
+                        }}
+                      >
+>>>>>>> fb12ab84a2972781f4ce021f7aaf36c437c35998
                         {name}
                       </span>
                     ))}
@@ -187,17 +284,41 @@ const Filter = ({
                   "Select transcript(s)"
                 )}
               </Dropdown.Toggle>
+<<<<<<< HEAD
+=======
+
+>>>>>>> fb12ab84a2972781f4ce021f7aaf36c437c35998
               <Dropdown.Menu style={{ maxHeight: "200px", overflowY: "auto" }}>
                 {uniqueTranscripts.map((option) => (
                   <Form.Check
                     key={option.id}
                     type="checkbox"
+<<<<<<< HEAD
                     label={option.name}
                     className="px-3 py-1"
                     style={{ whiteSpace: "nowrap" }}
                     checked={selectedTranscripts.includes(option.name)}
                     onChange={() => handleTranscriptCheck(option)}
                     onClick={(e) => e.stopPropagation()} // 🔒 Prevent dropdown from closing
+=======
+                    className="px-3 py-1"
+                    checked={selectedTranscripts.includes(option.name)}
+                    onChange={() => handleTranscriptCheck(option)}
+                    label={
+                      <span
+                        title={option.name}
+                        className="d-inline-block text-truncate"
+                        style={{
+                          maxWidth: "240px",
+                          whiteSpace: "nowrap",
+                          overflow: "hidden",
+                          textOverflow: "ellipsis",
+                        }}
+                      >
+                        {option.name}
+                      </span>
+                    }
+>>>>>>> fb12ab84a2972781f4ce021f7aaf36c437c35998
                   />
                 ))}
               </Dropdown.Menu>
@@ -214,8 +335,23 @@ const Filter = ({
               >
                 {selectedWitness.length > 0 ? (
                   <div className="d-flex flex-wrap gap-1">
+<<<<<<< HEAD
                     {selectedWitness.map((name, idx) => (
                       <span key={idx} className="badge bg-success">
+=======
+                    {selectedWitnesses.map((name, idx) => (
+                      <span
+                        key={idx}
+                        className="badge bg-success text-truncate"
+                        title={name}
+                        style={{
+                          maxWidth: "160px",
+                          overflow: "hidden",
+                          textOverflow: "ellipsis",
+                          whiteSpace: "nowrap",
+                        }}
+                      >
+>>>>>>> fb12ab84a2972781f4ce021f7aaf36c437c35998
                         {name}
                       </span>
                     ))}
@@ -229,10 +365,23 @@ const Filter = ({
                   <Form.Check
                     key={option.id}
                     type="checkbox"
-                    label={option.fullname}
                     className="px-3 py-1"
                     checked={selectedWitness.includes(option.fullname)}
                     onChange={() => handleWitnessCheck(option)}
+                    label={
+                      <span
+                        title={option.fullname}
+                        className="d-inline-block text-truncate"
+                        style={{
+                          maxWidth: "240px",
+                          whiteSpace: "nowrap",
+                          overflow: "hidden",
+                          textOverflow: "ellipsis",
+                        }}
+                      >
+                        {option.fullname}
+                      </span>
+                    }
                   />
                 ))}
               </Dropdown.Menu>
@@ -274,17 +423,29 @@ const Filter = ({
           </Form.Group> */}
 
           {/* Testimony Count */}
+<<<<<<< HEAD
           {/* <div className="bg-primary text-white text-center py-3 px-2 rounded-3"> */}
           {/* <h5 className="mb-1 fw-bold">Testimony Count</h5> */}
           {/* <h5 className=" mb-0">{testimonyCnt}</h5> */}
           {/* </div> */}
+=======
+          {/* <div className="bg-primary text-white text-center py-3 px-2 rounded-3">
+            <h5 className="mb-1 fw-bold">Testimony Count</h5>
+            <h5 className=" mb-0">{totalCount}</h5>
+          </div> */}
+>>>>>>> fb12ab84a2972781f4ce021f7aaf36c437c35998
 
           <div className="d-flex justify-content-between mt-4">
             <Button variant="secondary" onClick={handleClose}>
               Close
             </Button>
+<<<<<<< HEAD
             <Button variant="primary" onClick={handleReset}>
               Reset
+=======
+            <Button className="btn-sorath-main" onClick={handleClose}>
+              Apply Filters
+>>>>>>> fb12ab84a2972781f4ce021f7aaf36c437c35998
             </Button>
           </div>
         </div>

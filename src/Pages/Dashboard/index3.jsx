@@ -17,6 +17,7 @@ import {
   Modal,
 } from "react-bootstrap";
 import Filter from "../../components/Filter";
+import CommentSidebar from "../../components/Comment";
 import BASE_URL from "../../api";
 import { FaCommentAlt } from "react-icons/fa";
 import Comments from "../../components/Comments";
@@ -83,10 +84,21 @@ const TestimonySearchPage = () => {
   };
   // const [selectedWitness, setSelectedWitness] = useState([]);
 
+  const initials = getInitials(name);
+
+    function getInitials(name) {
+    if (!name) return "";
+    const words = name.trim().split(/\s+/);
+    const firstInitial = words[0]?.[0] || "";
+    const secondInitial = words[1]?.[0] || "";
+    return (firstInitial + secondInitial).toUpperCase();
+  }
+
   const handleWitnessFromChild = (data) => {
     setSelectedWitness(data);
   };
 
+<<<<<<< HEAD
   const handleDbChange = (data) => {
     setSelectedDatabases(data);
   };
@@ -133,6 +145,9 @@ const TestimonySearchPage = () => {
   };
 
   // const [selectedWitnessType, setSelectedWitnessType] = useState([]);
+=======
+  const [selectedWitnessType, setSelectedWitnessType] = useState([]);
+>>>>>>> fb12ab84a2972781f4ce021f7aaf36c437c35998
 
   const handleWitnessTypeFromChild = (data) => {
     setSelectedWitnessType(data);
@@ -223,6 +238,7 @@ const TestimonySearchPage = () => {
     fetchTranscripts();
   }, [offset]);
 
+<<<<<<< HEAD
   const handleScroll = () => {
     const { scrollTop, scrollHeight, clientHeight } =
       scrollContainerRef.current;
@@ -233,6 +249,31 @@ const TestimonySearchPage = () => {
   // useEffect(() => {
   //   fetchPaginatedData(currentPage, rowsPerPage);
   // }, [currentPage, rowsPerPage]);
+=======
+
+
+  // comment sidebar
+
+  const [showCommentSidebar, setShowCommentSidebar] = useState(false);
+const [commentSidebarData, setCommentSidebarData] = useState(null);
+
+const handleCommentClick = (rowData) => {
+  setCommentSidebarData(rowData);
+  setShowCommentSidebar(true);
+};
+
+const handleCloseCommentSidebar = () => {
+  setShowCommentSidebar(false);
+  setCommentSidebarData(null);
+};
+
+
+// end comment sidebar
+
+
+
+  const [showSearchSection, setShowSearchSection] = useState(false);
+>>>>>>> fb12ab84a2972781f4ce021f7aaf36c437c35998
 
   const [showSearchSection, setShowSearchSection] = useState(true);
 
@@ -273,6 +314,7 @@ const TestimonySearchPage = () => {
       );
       console.log("namesss", res.data.matching_transcripts);
       setFuzzyTranscripts(res.data.matching_transcripts);
+<<<<<<< HEAD
     } catch (err) {
       console.error("API error:", err.response?.data || err.message);
     }
@@ -290,11 +332,15 @@ const TestimonySearchPage = () => {
       );
       console.log("namesss", res.data.matching_witnesses);
       setFilenameCnt(res.data.matching_witnesses);
+=======
+      console.log("transcript names", res);
+>>>>>>> fb12ab84a2972781f4ce021f7aaf36c437c35998
     } catch (err) {
       console.error("API error:", err.response?.data || err.message);
     }
   };
 
+<<<<<<< HEAD
   // const handleSearchSubmit = async () => {
   //   setAppliedSearch({
   //     A: searchA,
@@ -391,6 +437,18 @@ const TestimonySearchPage = () => {
   ]);
 
   const fetchData = async () => {
+=======
+  const handleSearchSubmit = async (page = 1, pageSize) => {
+    setAppliedSearch({
+      A: searchA,
+      B: searchB,
+      C: searchC,
+      AType: searchAType,
+      BType: searchBType,
+      CType: searchCType,
+    });
+
+>>>>>>> fb12ab84a2972781f4ce021f7aaf36c437c35998
     setLoading(true);
 
     try {
@@ -442,7 +500,53 @@ const TestimonySearchPage = () => {
     }
   };
 
+<<<<<<< HEAD
   const isFirstRender = useRef(true);
+=======
+
+
+  useEffect(() => {
+    const fetchData = async () => {
+      console.log(selectedWitness.length, "selectedWitness");
+      try {
+        const res = await axios.post(
+          `${process.env.REACT_APP_PROD_API_URL}/api/testimony/combined-search/`,
+          {
+            q: searchA,
+            mode: searchAType,
+            witness_names: selectedWitness,
+            transcript_names: selectedTranscripts,
+            witness_types: selectedWitnessType,
+          },
+          {
+            params: {
+              page: currentPage,
+              page_size: rowsPerPage,
+            },
+          }
+        );
+        setQaPairs(res.data.results);
+        setTotalCount(res.data.count);
+      } catch (err) {
+        console.error("Failed to fetch paginated data:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+  
+    fetchData();
+   
+  }, [
+    selectedTranscripts,
+    selectedWitness,
+    selectedWitnessType,
+    currentPage,
+    rowsPerPage,
+    searchA,
+    searchAType,
+  ]);
+>>>>>>> fb12ab84a2972781f4ce021f7aaf36c437c35998
 
   const handleResetSearch = () => {
     setSearchA("");
@@ -497,6 +601,7 @@ const TestimonySearchPage = () => {
   };
   return (
     <Container fluid className=" px-3">
+<<<<<<< HEAD
       <Modal show={show} onHide={handleClose} scrollable centered size="lg">
         <Modal.Header closeButton>
           <Modal.Title>Help</Modal.Title>
@@ -683,16 +788,54 @@ const TestimonySearchPage = () => {
                 <FiSearch className="filter-sorath" />
               </Button>
 
+=======
+      <Card className="p-3 my-2 show-page-sorath">
+        {/* Search & Filter */}
+        {console.log("tscp[t", fuzzyTranscripts)}
+
+        <Row className="mb-3 align-items-center">
+          <Col md={6}>
+            
+            <h4 className="mb-0">Testimonies</h4>
+            {selectedWitness}
+          </Col>
+          <Col md={6}>
+            <div className="left-side-search-filter-button d-flex justify-content-md-end">
+              <Button
+                size="sm"
+                onClick={() => setShowSearchSection((prev) => !prev)}
+                className="filter-sorath-btn-color"
+              >
+                <FiSearch className="filter-sorath" />
+              </Button>
+
+>>>>>>> fb12ab84a2972781f4ce021f7aaf36c437c35998
               <Button
                 variant="outline-primary"
                 size="sm"
                 onClick={handleShowFilters}
+<<<<<<< HEAD
                 className="filter-sorath-btn ms-3"
+=======
+                className="filter-sorath-btn-color ms-3"
+>>>>>>> fb12ab84a2972781f4ce021f7aaf36c437c35998
               >
                 <FiFilter className="filter-sorath" />
               </Button>
             </div>
+<<<<<<< HEAD
+=======
+            {selectedWitness}
+            <div className="Filter-data-come"></div>
+>>>>>>> fb12ab84a2972781f4ce021f7aaf36c437c35998
           </Col>
+
+          {/* <Col md={6} className="text-end">
+            <h5>
+              Total Testimonies :{" "}
+              <span className="alternate-highlight">{totalCount}</span>
+            </h5>
+          </Col> */}
         </Row>
         {/* Conditional Search Section */}
 
@@ -702,6 +845,7 @@ const TestimonySearchPage = () => {
               {/* Search C */}
               <Col md={4}>
                 <Form.Label>Search by Filename</Form.Label>
+<<<<<<< HEAD
                 <div className="d-flex align-items-center gap-3">
                   <Form.Control
                     value={searchC}
@@ -730,6 +874,14 @@ const TestimonySearchPage = () => {
                   </div>
                 </div>
 
+=======
+                <Form.Control
+                  value={searchC}
+                  onChange={(e) => setSearchC(e.target.value)}
+                  placeholder="Search by Filename"
+                  className="form-sorath-input"
+                />
+>>>>>>> fb12ab84a2972781f4ce021f7aaf36c437c35998
                 <div className="mt-2 d-flex gap-2">
                   {["fuzzy", "boolean", "exact"].map((opt) => (
                     <Form.Check
@@ -755,6 +907,7 @@ const TestimonySearchPage = () => {
               {/* Search B */}
               <Col md={4}>
                 <Form.Label>Search by Witness</Form.Label>
+<<<<<<< HEAD
                 <div className="d-flex align-items-center gap-3">
                   <Form.Control
                     value={searchB}
@@ -782,6 +935,14 @@ const TestimonySearchPage = () => {
                   </div>
                 </div>
 
+=======
+                <Form.Control
+                  value={searchB}
+                  onChange={(e) => setSearchB(e.target.value)}
+                  placeholder="Search by Witness"
+                  className="form-sorath-input"
+                />
+>>>>>>> fb12ab84a2972781f4ce021f7aaf36c437c35998
                 <div className="mt-2 d-flex gap-2">
                   {["fuzzy", "boolean", "exact"].map((opt) => (
                     <Form.Check
@@ -808,6 +969,7 @@ const TestimonySearchPage = () => {
               {/* Search A */}
               <Col md={4}>
                 <Form.Label>Search All Testimony</Form.Label>
+<<<<<<< HEAD
                 <div className="d-flex align-items-center gap-3">
                   <Form.Control
                     value={searchA}
@@ -839,6 +1001,14 @@ const TestimonySearchPage = () => {
                   </div>
                 </div>
 
+=======
+                <Form.Control
+                  value={searchA}
+                  onChange={(e) => setSearchA(e.target.value)}
+                  placeholder="Search by test"
+                  className="form-sorath-input"
+                />
+>>>>>>> fb12ab84a2972781f4ce021f7aaf36c437c35998
                 <div className="mt-2 d-flex gap-2">
                   {["fuzzy", "boolean", "exact"].map((opt) => (
                     <Form.Check
@@ -861,6 +1031,7 @@ const TestimonySearchPage = () => {
                   ></i>{" "}
                 </div>
               </Col>
+<<<<<<< HEAD
 
               <Col md={1}>
                     <div className="mt-3 d-flex justify-content-end gap-2">
@@ -883,10 +1054,27 @@ const TestimonySearchPage = () => {
                     </div>
                   </Col>
             </Row>
+=======
+            </Row>
+
+            <div className="mt-3 d-flex justify-content-end gap-2">
+              <Button variant="secondary" size="sm" onClick={handleResetSearch}>
+                Reset
+              </Button>
+              <Button
+                size="sm"
+                onClick={() => handleSearchSubmit(currentPage, rowsPerPage)}
+                className="btn-sorath-main"
+              >
+                Apply Search
+              </Button>
+            </div>
+>>>>>>> fb12ab84a2972781f4ce021f7aaf36c437c35998
           </div>
         </Collapse>
 
         {/* Table */}
+<<<<<<< HEAD
 
         <div
           class="container"
@@ -1030,6 +1218,91 @@ const TestimonySearchPage = () => {
           {/* Loading Spinner */}
           {/* {loading && <div className="text-center p-2">Loading more...</div>} */}
         </div>
+=======
+        <Table responsive bordered className="align-middle rounded-3">
+          <thead className="table-sorath-three">
+            <tr>
+              <th style={{ width: "100px" }}>Filename and Cite</th>
+              <th style={{ width: "10%" }}>Comments</th> {/* Reduced width */}
+              <th style={{ width: "10%" }}>User</th> {/* Reduced width */}
+              <th style={{ width: "100px" }}>Question and Answers</th>
+            </tr>
+          </thead>
+          <tbody>
+            {qaPairs.map((row, idx) => (
+              <tr key={idx}>
+                <td style={{ width: "100px" }}>
+                  {row.transcript_name}
+                  <br />
+                  {row.cite}
+                </td>
+                {/* comment */}
+                <td
+                  style={{
+                    width: "10%", // Reduced width
+                    whiteSpace: "nowrap",
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                  }}
+                  onClick={() => handleCommentClick(row)}
+                >
+                  <div className="comment-icon-sorath">
+                    <svg
+                      id="Layer_1"
+                      data-name="Layer 1"
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 61.05 57.58"
+                    >
+                      <title>comment</title>
+                      <path
+                        d="M443.76,490.72V479.29c-8.71-1.55-10.18-8-9.76-15.94.31-6-.05-12,.1-18,.17-7.08,4.24-11.17,11.26-11.23q19.22-.15,38.43,0c7,.06,11,4.16,11.12,11.28.09,7.48.1,15,0,22.46-.11,7.06-4.11,11-11.29,11.1-6.32.11-12.67-.26-19,.16a16.64,16.64,0,0,0-7.95,2.91c-4.12,2.86-7.8,6.35-11.66,9.57Zm2.94-4a86.26,86.26,0,0,0,7-5.93c3.43-3.67,7.38-5.06,12.44-4.68,5.79.42,11.64.16,17.46.07,5.54-.09,8.55-2.76,8.68-8.11q.28-11.49,0-23c-.14-5.4-3.09-8.15-8.61-8.19q-19.22-.13-38.44,0c-5.22,0-8.21,2.85-8.34,7.94-.19,7.81-.11,15.64,0,23.46,0,3.72,1.93,7,5.49,7.37,5.1.46,5,3.17,4.41,6.76A35.67,35.67,0,0,0,446.7,486.76Z"
+                        transform="translate(-433.93 -434.09)"
+                      />
+                      <circle cx="14.52" cy="20.91" r="3" />
+                      <circle cx="30.52" cy="20.91" r="3" />
+                      <circle cx="46.52" cy="20.91" r="3" />
+                    </svg>
+                  </div>
+
+                  {/* You can put something like an icon or tooltip here later */}
+                </td>
+                {/* user */}
+                <td
+                  style={{
+                    width: "10%", // Reduced width
+                    whiteSpace: "nowrap",
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                    textAlign: "center",
+                  }}
+                >
+                  <button
+            className="btn dropdown-toggle p-0"
+            type="button"
+            id="profileDropdown"
+          >
+            <div
+              style={{
+                backgroundImage: 'url("https://i.pravatar.cc/150?img=4")',
+              }}
+              title={name}
+            >
+              {getInitials(name)}
+            </div>
+            {/* <span className="d-none d-md-inline">Profile</span> */}
+          </button>
+                </td>
+                {/* question */}
+                <td style={{ width: "100px" }}>
+                  {row.question}
+                  <br />
+                  {row.answer}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </Table>
+>>>>>>> fb12ab84a2972781f4ce021f7aaf36c437c35998
 
         {/* Pagination Footer */}
         <Row className="px-1 py-3 align-items-center">
@@ -1096,11 +1369,19 @@ const TestimonySearchPage = () => {
         // fuzzyWitnesses={fuzzyWitnesses}
       />
 
+<<<<<<< HEAD
       <Comments
         showComments={showComments}
         handleClose={handleCloseComments}
         testimonyId={testimonyId}
       ></Comments>
+=======
+      <CommentSidebar
+  show={showCommentSidebar}
+  handleClose={handleCloseCommentSidebar}
+  data={commentSidebarData}
+/>
+>>>>>>> fb12ab84a2972781f4ce021f7aaf36c437c35998
     </Container>
   );
 };
